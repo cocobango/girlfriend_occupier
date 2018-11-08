@@ -1,4 +1,13 @@
+/*
+feature list:
+make schedule more accurate
+make more conversation types
+choose random from array with priority to some of the array elements
+
+*/
+
 var delay = t => new Promise(resolve => setTimeout(resolve, t * 1000));
+var randInt = function(min, max) { return (Math.floor(Math.random() * (max - min) ) + min) };
 var messenger = class Messenger {
 
     sendMessage(content) {
@@ -44,7 +53,7 @@ var occupier = class GirlfriendOccupier {
         let addition = 0;
         for (let i = 0; i < 5; i++) {
             this.runAt(now.getHours() + addition);
-            addition = addition + this.intBetween(min, max);
+            addition = addition + randInt(min, max);
         }
     }
 
@@ -53,7 +62,7 @@ var occupier = class GirlfriendOccupier {
         let display_time = new Date();
         if (hour <= this.end_hour && hour >= this.start_hour) {
             console.log(`accepted hour ${hour}`);
-            let seconds = (((hour - now.getHours()) * 60 ) + this.intBetween(0, 60) )* 60;
+            let seconds = (((hour - now.getHours()) * 60 ) + randInt(0, 60) )* 60;
             console.log(`running in ${display_time.setSeconds(display_time.getSeconds() + seconds)} seconds`);
             console.log(`at: ${display_time.getHours()}:${display_time.getMinutes()}`);
             delay(seconds).then(() => this.talk());
@@ -62,10 +71,6 @@ var occupier = class GirlfriendOccupier {
         }
     }
 
-    intBetween(min, max) {
-        return (Math.floor(Math.random() * (max - min) ) + min)
-    }   
-    
     talk() {
         this.talker.talk();
     }
@@ -98,11 +103,19 @@ var talker = class Talker {
     }
 
     getMantras() {
-        return ['*איש המערות לא מפחד מעטלף*', '*זמן הוא אשליה של האדם הלבן שנועדה לשעבד אותנו*', '*את חזקה ועצמאית כמו ביונסה*', '*אין מה לפחד אלא מהפחד עצמו*', '*גם את*', '*נהדררררר*', '*נהדררררררררר*', '*נהדרררר*', '*סנדלר חכם לא הולך יחף*', '*עם הנצח לא מפחד מדרך ארוכה*', ]
+        return ['*איש המערות לא מפחד מעטלף*', '*זמן הוא אשליה של האדם הלבן שנועדה לשעבד אותנו*', '*את חזקה ועצמאית כמו ביונסה*', '*אין מה לפחד אלא מהפחד עצמו*', '*גם את*', '*סנדלר חכם לא הולך יחף*', '*עם הנצח לא מפחד מדרך ארוכה*', ]
     }
 
     getSongs() {
         return ['https://www.youtube.com/watch?v=9aFz_aLuFhI', 'https://www.youtube.com/watch?v=94BIxqTYJzU', 'https://www.youtube.com/watch?v=cRGrIn2VHTE', 'https://www.youtube.com/watch?v=Vj0GqUeUstM', 'https://www.youtube.com/watch?v=UPnLRL1mfF0', 'https://www.youtube.com/watch?v=lo4Trkb0cFk', 'https://www.youtube.com/watch?v=m5HXWKvKN5Y',]
+    }
+
+    getConversations() {
+        return [
+            { value: 'mantra', weight: 8},
+            { value: 'sing', weight: 1},
+            { value: 'question', weight: 3},
+        ]
     }
 
     getReminderPrefix() {
@@ -117,6 +130,18 @@ var talker = class Talker {
         return arr[Math.floor(Math.random()*arr.length)];
     }
 
+    randByWeight(arr) {
+        let sum = 0;
+        let vals_arr = [];
+        for (var i = 0; i < arr.length; i++) {
+            sum = sum + arr[i].weight;
+            for (var j = 0; j < arr[i].weight; j++) {
+                vals_arr.push(arr[i].value);
+            }
+        }
+        return this.rand(vals_arr);
+    }
+
     randSeconds() {
         let max = 15;
         let min = 0;
@@ -124,15 +149,21 @@ var talker = class Talker {
     }
 
     talk() {
-        if(Date.now() % 6 == 0) {
-            this.mantra();
-            return;
+        let conversation = this.chooseConversation();
+        try {
+            this[conversation]();
         }
-        if(Date.now() % 15 == 0) {
-            this.sing();
-            return;
+        catch(err) {
+            console.log('no conversation chosen');
+            console.log('error: ');
+            console.log(err);
+            this.kiss();
         }
-        this.question();
+    }
+
+    chooseConversation() {
+        let conversations = this.getConversations();
+        return this.randByWeight(conversations);
     }
 
     mantra() {
@@ -197,11 +228,11 @@ var talker = class Talker {
     }
 
 }
-var min_message_gap = 2; 
-var max_message_gap = 5;
+var min_hours_message_gap = 2; 
+var max_hours_message_gap = 5;
 var start_hour = 8;
 var end_hour = 22;
 
-var starter = new occupier(min_message_gap, max_message_gap, start_hour, end_hour);
+var starter = new occupier(min_hours_message_gap, max_hours_message_gap, start_hour, end_hour);
 starter.schedule();
 
