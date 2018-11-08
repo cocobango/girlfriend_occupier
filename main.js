@@ -3,6 +3,8 @@ feature list:
 make schedule more accurate
 make more conversation types
 choose random from array with priority to some of the array elements
+answer questions
+send media
 
 */
 
@@ -87,11 +89,11 @@ var talker = class Talker {
     }
 
     getCompliments() {
-        return ['איזו יפה את!', 'המתיקות נשפכת ממך', 'הכוכבים והירח ביחד לא זוהרים כמוך', 'אם לא היית קיימת היה צריך להמציא אותך', 'את סוכרייה על מקל את', 'אין כמוך בעולם', 'משמחת לבב אנוש שכמוך', 'יראת שמיים', 'כמה שאת חכמה', 'פיך מפיק מרגליות', 'סננית', 'את בנאדם מעניין', 'לא יודע איך לאכול אותך', 'איזה עיניים', 'יא אללה שלך',];
+        return ['איזו יפה את!', 'המתיקות נשפכת ממך', 'הכוכבים והירח ביחד לא זוהרים כמוך', 'אם לא היית קיימת היה צריך להמציא אותך', 'את סוכרייה על מקל את', 'אין כמוך בעולם', 'משמחת לבב אנוש שכמוך', 'יראת שמיים', 'כמה שאת חכמה', 'פיך מפיק מרגליות', 'סננית', 'את בנאדם מעניין', 'לא יודע איך לאכול אותך', 'איזה עיניים', 'יא אללה שלך', 'דובשנייה שלי',];
     }
 
     getQuestions() {
-        return ['מה אכלת היום?', 'מה את לובשת?', 'מה עשית היום?', 'את ערה?', 'איך עובר היום?', 'איך היום שלך?', 'מתי פעם אחרונה פגשת את אורטלית?', 'מה שלום אמא שלך?', 'מה שלום אורטלית?', 'מה שלום הסגנית שלך?',];
+        return ['מה אכלת היום?', 'מה את לובשת?', 'מה את לובשת מתחת למה שאת לובשת?', 'מה עשית היום?', 'את ערה?', 'איך עובר היום?', 'איך היום שלך?', 'מתי פעם אחרונה פגשת את אורטלית?', 'מה שלום אמא שלך?', 'מה שלום אורטלית?', 'מה שלום הסגנית שלך?',];
     }
 
     getTalkLaters() {
@@ -184,14 +186,46 @@ var talker = class Talker {
         let seconds = this.randSeconds() + 2;
         this.greet();
         delay(seconds).then(() =>this.kiss());
-        seconds  = seconds + this.randSeconds() + 10;
+        seconds = seconds + this.randSeconds() + 10;
         delay(seconds).then(() =>this.ask());
-        seconds  = seconds + this.randSeconds() + 10;
+        seconds = seconds + this.randSeconds() + 10;
         delay(seconds).then(() =>this.compliment());
-        seconds  = seconds + this.randSeconds() + 4;
+        seconds = seconds + this.randSeconds() + 4;
         delay(seconds).then(() =>this.later());
-        seconds  = seconds + this.randSeconds() +  4;
+        seconds = seconds + this.randSeconds() +  4;
         delay(seconds).then(() =>this.kiss());
+    }
+
+    invite() {
+        // billiards
+        // dance
+        // standup
+        // sport game
+        // bowling
+        // observatory
+        // trip
+        // beach
+        // sex on the beach
+        let seconds = this.randSeconds() + 2;
+        this.greet();
+        delay(seconds).then(() =>this.kiss());
+        seconds = seconds + this.randSeconds() + 10;
+    }
+
+    fight() {
+        // השמנת
+        // מי זו החברה הזאת שלך היפה ההיא
+        // את בדיוק כמו אמא שלך
+    }
+
+    task() {
+        // walk with dog
+        // give hug to bear
+        // cook
+        // gym
+        // clean
+        // selfie
+        // buy me a [bicycle, ball, playstation]
     }
 
     greet() {
