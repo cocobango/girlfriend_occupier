@@ -8,6 +8,7 @@
 // @grant        GM_xmlhttpRequest
 // @grant        window
 // @run-at       document-idle
+// @url          https://greasyfork.org/en/scripts/20990-whatsapp-web-chat-bot/code
 // ==/UserScript==
 
 var jq = document.createElement('script');

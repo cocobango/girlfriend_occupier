@@ -275,7 +275,6 @@ var talker = class Talker {
         return [
             { value: 'השמנת', weight: 8.87},
             { value: 'תזכירי לי איך קוראים לחברה היפה הזו שלך', weight: 1},
-            { value: 'את בדיוק כמו אמא שלך', weight: 3},
             { value: 'את קצת מזניחה את עצמך וחבל', weight: 3},
         ]
     }
