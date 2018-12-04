@@ -384,8 +384,6 @@ var talker = class Talker {
         seconds = seconds + rand.seconds() + 10;
         delay(seconds).then(() =>this.compliment());
         seconds = seconds + rand.seconds() + 4;
-        delay(seconds).then(() =>this.later());
-        seconds = seconds + rand.seconds() +  4;
         delay(seconds).then(() =>this.kiss());
     }
 

@@ -22,6 +22,7 @@ var messenger = class Messenger {
     }
 
     analizeChat() {
+        return;
         console.log("[WACB] Listening to chat");
         if(this.lastSentBy() == 'someone else') {
             this.contemplateAnswer()
@@ -29,6 +30,10 @@ var messenger = class Messenger {
         if (this.lastSentBy() == 'me') {
             console.log('i sent the last message')
         }
+    }
+
+    chooseConversation(contact_name) {
+
     }
 
     contemplateAnswer() {
